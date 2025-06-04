@@ -6,7 +6,7 @@ import { Navbar } from "./ui/Navbar";
 import { DropdownNav } from "./ui/DropdownNav";
 
 export default function Home() {
-  const { showDropdown, setShowDropdown } = useDropdown();
+  const { showDropdown } = useDropdown();
 
   return (
     <div>

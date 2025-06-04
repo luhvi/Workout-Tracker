@@ -219,10 +219,7 @@ const Exercise = ({
   reps,
   sets,
   exercises,
-  setExercises,
-  editingExercise,
   setEditingExercise,
-  editedExercise,
   setEditedExercise,
 }: ExerciseProps) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -277,10 +274,8 @@ const Exercise = ({
 type EditExerciseProps = EditingProps & EditedProps;
 
 export const EditExercise = ({
-  editingExercise,
   setEditingExercise,
   editedExercise,
-  setEditedExercise,
 }: EditExerciseProps) => {
   return (
     <div className="absolute top-60 left-1/2 h-65 w-80 -translate-x-1/2 rounded-sm border-2 border-neutral-800 bg-neutral-900 font-[family-name:var(--font-geist-mono)] shadow-[2px_2px_10px_rgba(0,0,0,0.25)]">
