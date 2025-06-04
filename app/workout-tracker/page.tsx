@@ -38,7 +38,7 @@ type Exercise = {
 };
 
 const WorkoutTracker = () => {
-  const { showDropdown, setShowDropdown } = useDropdown();
+  const { showDropdown } = useDropdown();
 
   const [exercises, setExercises] = useState<Exercise[]>([
     {
