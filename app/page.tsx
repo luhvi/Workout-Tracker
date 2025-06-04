@@ -4,7 +4,7 @@ import { useDropdown } from "./DropdownContext";
 
 import { Navbar } from "./ui/Navbar";
 import { DropdownNav } from "./ui/DropdownNav";
-import { LandingPageMain } from "./components/LandingPage";
+import { HomePage } from "./components/HomePage";
 
 export default function Home() {
   const { showDropdown } = useDropdown();
@@ -13,7 +13,7 @@ export default function Home() {
     <div>
       <Navbar />
       <DropdownNav />
-      {!showDropdown ? <LandingPageMain /> : null}
+      {!showDropdown ? <HomePage /> : null}
     </div>
   );
 }
