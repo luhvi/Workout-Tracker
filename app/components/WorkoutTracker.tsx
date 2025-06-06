@@ -211,7 +211,7 @@ export const EditExercise = ({
   return (
     <div className="absolute top-1/3 left-1/2 h-81 w-90 -translate-x-1/2 rounded-sm border-2 border-neutral-800 bg-neutral-900 font-[family-name:var(--font-geist-mono)] shadow-[2px_2px_10px_rgba(0,0,0,0.25)]">
       <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
-        <h1 className="text-sm font-medium">Edit Exercise</h1>
+        <h1 className="text-[0.75rem]">Edit Exercise</h1>
         <button
           className="cursor-pointer transition-colors duration-150 hover:text-neutral-600"
           onClick={() => setEditingExercise(false)}
@@ -277,7 +277,7 @@ export const EditExercise = ({
         ></input>
       </div>
       <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
-        <button className="cursor-pointer text-sm font-medium text-neutral-600 transition-colors duration-300 hover:text-white">
+        <button className="cursor-pointer text-[0.75rem] text-neutral-600 transition-colors duration-300 hover:text-white">
           Save
         </button>
       </div>
