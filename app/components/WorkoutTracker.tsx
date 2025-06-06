@@ -43,7 +43,7 @@ const WorkoutTracker = () => {
   const { showDropdown } = useDropdown();
 
   return (
-    <>
+    <div>
       {!showDropdown ? (
         <ExerciseList
           exercises={exercises}
@@ -63,7 +63,7 @@ const WorkoutTracker = () => {
           setEditedExercise={setEditedExercise}
         />
       ) : null}
-    </>
+    </div>
   );
 };
 export default WorkoutTracker;
@@ -105,7 +105,7 @@ export const ExerciseList = ({
 
   return (
     <div
-      className={`mt-40 flex h-full w-[100vw] justify-center ${editingExercise ? "blur-xs" : ""}`}
+      className={`flex h-screen w-full items-center justify-center overflow-hidden pt-20 ${editingExercise ? "blur-xs" : ""}`}
     >
       <DndContext
         sensors={sensors}
@@ -116,7 +116,7 @@ export const ExerciseList = ({
           items={exercises}
           strategy={verticalListSortingStrategy}
         >
-          <div className="flex h-200 w-100 flex-col">
+          <div className="flex h-200 w-100 flex-col justify-center">
             {exercises.map((exercise) => (
               <Exercise
                 id={exercise.id}
@@ -209,68 +209,78 @@ export const EditExercise = ({
   editedExercise,
 }: EditExerciseProps) => {
   return (
-    <div className="absolute top-60 left-1/2 h-65 w-80 -translate-x-1/2 rounded-sm border-2 border-neutral-800 bg-neutral-900 font-[family-name:var(--font-geist-mono)] shadow-[2px_2px_10px_rgba(0,0,0,0.25)]">
-      <div className="relative mt-1 mb-1">
-        <label className="absolute top-0.5 left-1 text-[0.5rem]" htmlFor="name">
+    <div className="absolute top-1/3 left-1/2 h-81 w-90 -translate-x-1/2 rounded-sm border-2 border-neutral-800 bg-neutral-900 font-[family-name:var(--font-geist-mono)] shadow-[2px_2px_10px_rgba(0,0,0,0.25)]">
+      <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
+        <h1 className="text-sm font-medium">Edit Exercise</h1>
+        <button
+          className="cursor-pointer transition-colors duration-150 hover:text-neutral-600"
+          onClick={() => setEditingExercise(false)}
+        >
+          <FontAwesomeIcon icon={faXmark} />
+        </button>
+      </div>
+      <div className="mt-4 flex flex-col">
+        <label className="ml-4 text-[0.75rem]" htmlFor="name">
           Name
         </label>
         <input
-          className="h-10 w-full px-1 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+          className="mx-4 h-10 rounded-md bg-neutral-800 pr-4 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
           type="text"
           name="name"
           defaultValue={editedExercise?.name}
         ></input>
       </div>
-      <div className="relative mt-1 mb-1">
-        <label className="absolute top-0.5 left-1 text-[0.5rem]" htmlFor="kg">
-          Kg
-        </label>
-        <input
-          className="h-10 w-full px-1 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-          type="number"
-          name="kg"
-          defaultValue={editedExercise?.reps}
-        ></input>
+      <div className="my-4 mr-4 flex items-center justify-between">
+        <div className="flex flex-col">
+          <label className="ml-4 text-[0.75rem]" htmlFor="kg">
+            Kg
+          </label>
+          <input
+            className="ml-4 h-10 w-20 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            type="number"
+            name="kg"
+            defaultValue={editedExercise?.kg}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="ml-4 text-[0.75rem]" htmlFor="reps">
+            Reps
+          </label>
+          <input
+            className="ml-4 h-10 w-20 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            type="number"
+            name="reps"
+            defaultValue={editedExercise?.reps}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="ml-4 text-[0.75rem]" htmlFor="sets">
+            Sets
+          </label>
+          <input
+            className="ml-4 h-10 w-20 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            type="number"
+            name="sets"
+            defaultValue={editedExercise?.sets}
+          ></input>
+        </div>
       </div>
-      <div className="relative mt-1 mb-1">
-        <label className="absolute top-0.5 left-1 text-[0.5rem]" htmlFor="reps">
-          Reps
-        </label>
-        <input
-          className="h-10 w-full px-1 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-          type="number"
-          name="reps"
-          defaultValue={editedExercise?.reps}
-        ></input>
-      </div>
-      <div className="relative mt-1 mb-1">
-        <label className="absolute top-0.5 left-1 text-[0.5rem]" htmlFor="sets">
-          Sets
-        </label>
-        <input
-          className="h-10 w-full px-1 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-          type="number"
-          name="sets"
-          defaultValue={editedExercise?.sets}
-        ></input>
-      </div>
-      <div className="relative mt-1 mb-1">
-        <label className="absolute top-0.5 left-1 text-[0.5rem]" htmlFor="misc">
+      <div className="mb-6 flex flex-col">
+        <label className="ml-4 text-[0.75rem]" htmlFor="misc">
           Misc
         </label>
         <input
-          className="h-10 w-full px-1 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+          className="mx-4 h-10 rounded-md bg-neutral-800 px-4 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
           type="text"
           name="misc"
           defaultValue={editedExercise?.misc}
         ></input>
       </div>
-      <button
-        className="absolute right-3 bottom-1.5 cursor-pointer transition-colors duration-150 hover:text-neutral-600"
-        onClick={() => setEditingExercise(false)}
-      >
-        <FontAwesomeIcon icon={faXmark} />
-      </button>
+      <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
+        <button className="cursor-pointer text-sm font-medium text-neutral-600 transition-colors duration-300 hover:text-white">
+          Save
+        </button>
+      </div>
     </div>
   );
 };
