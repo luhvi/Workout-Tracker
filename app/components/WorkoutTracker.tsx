@@ -236,7 +236,7 @@ export const EditExercise = ({
             Kg
           </label>
           <input
-            className="ml-4 h-10 w-20 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
             type="number"
             name="kg"
             defaultValue={editedExercise?.kg}
@@ -247,7 +247,7 @@ export const EditExercise = ({
             Reps
           </label>
           <input
-            className="ml-4 h-10 w-20 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
             type="number"
             name="reps"
             defaultValue={editedExercise?.reps}
@@ -258,7 +258,7 @@ export const EditExercise = ({
             Sets
           </label>
           <input
-            className="ml-4 h-10 w-20 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
             type="number"
             name="sets"
             defaultValue={editedExercise?.sets}
