@@ -10,7 +10,7 @@ const ExercisesContext = createContext<ExercisesType | undefined>(undefined);
 export const ExercisesProvider = ({ children }: { children: ReactNode }) => {
   const [exercises, setExercises] = useState<ExerciseType[]>([
     {
-      id: 1,
+      id: 0,
       name: "Dumbbell Press",
       kg: 56,
       sets: 2,
@@ -18,9 +18,17 @@ export const ExercisesProvider = ({ children }: { children: ReactNode }) => {
       misc: "Bench incline: 30°",
     },
     {
-      id: 2,
+      id: 1,
       name: "Barbell Press",
       kg: 86,
+      sets: 2,
+      reps: 6,
+      misc: "",
+    },
+    {
+      id: 2,
+      name: "Dumbbell Lateral Raise",
+      kg: 16,
       sets: 2,
       reps: 6,
       misc: "",
@@ -43,14 +51,6 @@ export const ExercisesProvider = ({ children }: { children: ReactNode }) => {
     },
     {
       id: 5,
-      name: "Dumbbell Lateral Raise",
-      kg: 16,
-      sets: 2,
-      reps: 6,
-      misc: "",
-    },
-    {
-      id: 6,
       name: "Dumbbell Lateral Raise",
       kg: 16,
       sets: 2,

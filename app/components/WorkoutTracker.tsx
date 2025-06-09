@@ -27,12 +27,13 @@ import type {
 import { useExercises } from "../ExercisesContext";
 import { useEditing } from "../EditingContext";
 import { useEdited } from "../EditedContext";
+import { useDropdown } from "../DropdownContext";
 
 import { CSS } from "@dnd-kit/utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useDropdown } from "../DropdownContext";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 type ExerciseListProps = ExercisesType & EditingType & EditedType;
 
@@ -116,7 +117,7 @@ export const ExerciseList = ({
           items={exercises}
           strategy={verticalListSortingStrategy}
         >
-          <div className="flex h-200 w-100 flex-col justify-center">
+          <div className="flex w-100 flex-col justify-center">
             {exercises.map((exercise) => (
               <Exercise
                 id={exercise.id}
@@ -134,6 +135,7 @@ export const ExerciseList = ({
                 key={exercise.id}
               />
             ))}
+            <AddExercise exercises={exercises} setExercises={setExercises} />
           </div>
         </SortableContext>
       </DndContext>
@@ -281,6 +283,24 @@ export const EditExercise = ({
           Save
         </button>
       </div>
+    </div>
+  );
+};
+
+const AddExercise = ({ exercises, setExercises }: ExercisesType) => {
+  const addExercise = () => {
+    setExercises((prev) => [
+      ...prev,
+      { id: prev.length, name: "", kg: 0, reps: 0, sets: 0, misc: "" },
+    ]);
+  };
+
+  return (
+    <div
+      className="relative mb-2 flex h-10 cursor-pointer touch-none items-center justify-center rounded-sm border-2 border-neutral-800 bg-neutral-900 py-10 font-[family-name:var(--font-geist-mono)] transition-colors duration-150 hover:bg-neutral-800"
+      onClick={addExercise}
+    >
+      <FontAwesomeIcon icon={faPlus} />
     </div>
   );
 };

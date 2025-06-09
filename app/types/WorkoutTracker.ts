@@ -4,8 +4,8 @@ export type ExerciseType = {
   id: number;
   name: string;
   kg: number;
-  sets: number;
   reps: number;
+  sets: number;
   misc: string;
 };
 
