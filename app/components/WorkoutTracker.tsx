@@ -44,7 +44,7 @@ const WorkoutTracker = () => {
   const { showDropdown } = useDropdown();
 
   return (
-    <div>
+    <div className="relative flex min-h-screen flex-col items-center justify-center">
       {!showDropdown ? (
         <ExerciseList
           exercises={exercises}
@@ -57,12 +57,14 @@ const WorkoutTracker = () => {
       ) : null}
 
       {editingExercise ? (
-        <EditExercise
-          editingExercise={editingExercise}
-          setEditingExercise={setEditingExercise}
-          editedExercise={editedExercise}
-          setEditedExercise={setEditedExercise}
-        />
+        <div className="bg-[rgb(10,10,10,0.7) absolute top-0 left-0 flex h-full w-full items-center justify-center backdrop-blur-sm">
+          <EditExercise
+            editingExercise={editingExercise}
+            setEditingExercise={setEditingExercise}
+            editedExercise={editedExercise}
+            setEditedExercise={setEditedExercise}
+          />
+        </div>
       ) : null}
     </div>
   );
@@ -105,9 +107,7 @@ export const ExerciseList = ({
   );
 
   return (
-    <div
-      className={`flex h-screen w-full items-center justify-center overflow-hidden pt-20 ${editingExercise ? "blur-xs" : ""}`}
-    >
+    <div className="flex w-full flex-col items-center justify-center">
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}
@@ -211,7 +211,7 @@ export const EditExercise = ({
   editedExercise,
 }: EditExerciseProps) => {
   return (
-    <div className="absolute top-1/3 left-1/2 h-81 w-90 -translate-x-1/2 rounded-sm border-2 border-neutral-800 bg-neutral-900 font-[family-name:var(--font-geist-mono)] shadow-[2px_2px_10px_rgba(0,0,0,0.25)]">
+    <div className="rounded-sm border-2 border-neutral-800 bg-neutral-900 font-[family-name:var(--font-geist-mono)] shadow-[2px_2px_10px_rgba(0,0,0,0.25)]">
       <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
         <h1 className="text-[0.75rem]">Edit Exercise</h1>
         <button

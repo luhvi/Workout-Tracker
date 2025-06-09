@@ -11,7 +11,7 @@ export const Navbar = () => {
   const { showDropdown, setShowDropdown } = useDropdown();
 
   return (
-    <div className="fixed flex h-21.5 w-full flex-row items-center border-b-2 border-neutral-800">
+    <div className="bg-[rgb(10,10,10,0.7) fixed top-0 z-50 flex h-21.5 w-full flex-row items-center border-b-2 border-neutral-800 backdrop-blur-md">
       <div className="hidden items-center md:flex">
         <button
           onClick={() => setShowDropdown(false)}

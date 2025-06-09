@@ -6,9 +6,11 @@ import WorkoutTracker from "../components/WorkoutTracker";
 
 const WorkoutTrackerPage = () => {
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       <Navbar />
-      <DropdownNav />
+      <main className="flex-grow">
+        <DropdownNav />
+      </main>
       <WorkoutTracker />
     </div>
   );
