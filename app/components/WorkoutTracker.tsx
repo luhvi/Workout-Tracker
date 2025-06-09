@@ -57,7 +57,7 @@ const WorkoutTracker = () => {
       ) : null}
 
       {editingExercise ? (
-        <div className="bg-[rgb(10,10,10,0.7) absolute top-0 left-0 flex h-full w-full items-center justify-center backdrop-blur-sm">
+        <div className="bg-[rgb(10,10,10,0.7) fixed top-0 left-0 flex h-full w-full items-center justify-center backdrop-blur-sm">
           <EditExercise
             editingExercise={editingExercise}
             setEditingExercise={setEditingExercise}
