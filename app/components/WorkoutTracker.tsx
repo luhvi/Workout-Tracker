@@ -287,7 +287,7 @@ export const EditExercise = ({
   );
 };
 
-const AddExercise = ({ exercises, setExercises }: ExercisesType) => {
+const AddExercise = ({ setExercises }: ExercisesType) => {
   const addExercise = () => {
     setExercises((prev) => [
       ...prev,
