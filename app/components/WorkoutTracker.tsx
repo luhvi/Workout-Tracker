@@ -36,7 +36,6 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useEffect } from "react";
 
 type ExerciseListProps = ExercisesType & EditingType & EditedType;
 
