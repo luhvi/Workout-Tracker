@@ -35,6 +35,9 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useEffect } from "react";
+
 type ExerciseListProps = ExercisesType & EditingType & EditedType;
 
 const WorkoutTracker = () => {
@@ -63,6 +66,8 @@ const WorkoutTracker = () => {
             setEditingExercise={setEditingExercise}
             editedExercise={editedExercise}
             setEditedExercise={setEditedExercise}
+            exercises={exercises}
+            setExercises={setExercises}
           />
         </div>
       ) : null}
@@ -86,9 +91,7 @@ export const ExerciseList = ({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (!active || !over) return;
-
-    if (active.id === over.id) return;
+    if (!active || !over || active.id === over.id) return;
 
     setExercises((exercises) => {
       const originalPos = getTaskPos(active.id);
@@ -204,12 +207,29 @@ const Exercise = ({
   );
 };
 
-type EditExerciseProps = EditingType & EditedType;
+type EditExerciseProps = EditingType & EditedType & ExercisesType;
 
 export const EditExercise = ({
   setEditingExercise,
   editedExercise,
+  exercises,
+  setExercises,
 }: EditExerciseProps) => {
+  const { register, handleSubmit } = useForm<ExerciseType>();
+
+  const onSubmit: SubmitHandler<ExerciseType> = (data: ExerciseType) => {
+    if (!editedExercise) return;
+
+    setExercises(
+      exercises.map((exercise) =>
+        exercise.id === editedExercise.id
+          ? { ...editedExercise, ...data }
+          : exercise,
+      ),
+    );
+    setEditingExercise(false);
+  };
+
   return (
     <div className="rounded-sm border-2 border-neutral-800 bg-neutral-900 font-[family-name:var(--font-geist-mono)] shadow-[2px_2px_10px_rgba(0,0,0,0.25)]">
       <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
@@ -221,68 +241,73 @@ export const EditExercise = ({
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
-      <div className="mt-4 flex flex-col">
-        <label className="ml-4 text-[0.75rem]" htmlFor="name">
-          Name
-        </label>
-        <input
-          className="mx-4 h-10 rounded-md bg-neutral-800 pr-4 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-          type="text"
-          name="name"
-          defaultValue={editedExercise?.name}
-        ></input>
-      </div>
-      <div className="my-4 mr-4 flex items-center justify-between">
-        <div className="flex flex-col">
-          <label className="ml-4 text-[0.75rem]" htmlFor="kg">
-            Kg
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mt-4 flex flex-col">
+          <label className="ml-4 text-[0.75rem]" htmlFor="name">
+            Name
           </label>
           <input
-            className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-            type="number"
-            name="kg"
-            defaultValue={editedExercise?.kg}
+            className="mx-4 h-10 rounded-md bg-neutral-800 pr-4 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            type="text"
+            defaultValue={editedExercise?.name}
+            {...register("name", { required: true })}
           ></input>
         </div>
-        <div className="flex flex-col">
-          <label className="ml-4 text-[0.75rem]" htmlFor="reps">
-            Reps
+        <div className="my-4 mr-4 flex items-center justify-between">
+          <div className="flex flex-col">
+            <label className="ml-4 text-[0.75rem]" htmlFor="kg">
+              Kg
+            </label>
+            <input
+              className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+              type="number"
+              defaultValue={editedExercise?.kg}
+              {...register("kg", { required: true })}
+            ></input>
+          </div>
+          <div className="flex flex-col">
+            <label className="ml-4 text-[0.75rem]" htmlFor="reps">
+              Reps
+            </label>
+            <input
+              className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+              type="number"
+              defaultValue={editedExercise?.reps}
+              {...register("reps", { required: true })}
+            ></input>
+          </div>
+          <div className="flex flex-col">
+            <label className="ml-4 text-[0.75rem]" htmlFor="sets">
+              Sets
+            </label>
+            <input
+              className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+              type="number"
+              defaultValue={editedExercise?.sets}
+              {...register("sets", { required: true })}
+            ></input>
+          </div>
+        </div>
+        <div className="mb-6 flex flex-col">
+          <label className="ml-4 text-[0.75rem]" htmlFor="misc">
+            Misc
           </label>
           <input
-            className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-            type="number"
-            name="reps"
-            defaultValue={editedExercise?.reps}
+            className="mx-4 h-10 rounded-md bg-neutral-800 px-4 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
+            type="text"
+            defaultValue={editedExercise?.misc}
+            {...register("misc")}
           ></input>
         </div>
-        <div className="flex flex-col">
-          <label className="ml-4 text-[0.75rem]" htmlFor="sets">
-            Sets
-          </label>
-          <input
-            className="ml-4 h-10 w-24 rounded-md bg-neutral-800 pl-3 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-            type="number"
-            name="sets"
-            defaultValue={editedExercise?.sets}
-          ></input>
+        <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
+          <button
+            className="cursor-pointer text-[0.75rem] text-neutral-600 transition-colors duration-300 hover:text-white"
+            type="submit"
+          >
+            Save
+          </button>
         </div>
-      </div>
-      <div className="mb-6 flex flex-col">
-        <label className="ml-4 text-[0.75rem]" htmlFor="misc">
-          Misc
-        </label>
-        <input
-          className="mx-4 h-10 rounded-md bg-neutral-800 px-4 text-sm text-white shadow-[2px_2px_10px_rgba(0,0,0,0.5)] outline-none"
-          type="text"
-          name="misc"
-          defaultValue={editedExercise?.misc}
-        ></input>
-      </div>
-      <div className="flex items-center justify-between px-4 py-2 shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
-        <button className="cursor-pointer text-[0.75rem] text-neutral-600 transition-colors duration-300 hover:text-white">
-          Save
-        </button>
-      </div>
+      </form>
     </div>
   );
 };
@@ -291,7 +316,14 @@ const AddExercise = ({ setExercises }: ExercisesType) => {
   const addExercise = () => {
     setExercises((prev) => [
       ...prev,
-      { id: prev.length, name: "", kg: 0, reps: 0, sets: 0, misc: "" },
+      {
+        id: prev.length,
+        name: "New Exercise",
+        kg: 0,
+        reps: 0,
+        sets: 0,
+        misc: "",
+      },
     ]);
   };
 
