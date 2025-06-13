@@ -36,6 +36,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 type ExerciseListProps = ExercisesType & EditingType & EditedType;
 
@@ -44,6 +45,19 @@ const WorkoutTracker = () => {
   const { editingExercise, setEditingExercise } = useEditing();
   const { editedExercise, setEditedExercise } = useEdited();
   const { showDropdown } = useDropdown();
+
+  useEffect(() => {
+    const fetchExercises = async () => {
+      const res = await fetch("/api/exercises");
+      const data = await res.json();
+
+      if (Array.isArray(data)) {
+        setExercises(data);
+      }
+    };
+
+    fetchExercises();
+  }, []);
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center">
@@ -87,7 +101,7 @@ export const ExerciseList = ({
     return exercises.findIndex((exercise) => exercise.id === id);
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!active || !over || active.id === over.id) return;
@@ -96,8 +110,33 @@ export const ExerciseList = ({
       const originalPos = getTaskPos(active.id);
       const newPos = getTaskPos(over.id);
 
-      return arrayMove(exercises, originalPos, newPos);
+      const newOrder = arrayMove(exercises, originalPos, newPos);
+
+      saveNewOrder(newOrder);
+
+      return newOrder;
     });
+  };
+
+  const saveNewOrder = async (newOrder: ExerciseType[]) => {
+    const reorderedPayload = newOrder.map((exercise, index) => ({
+      id: exercise.id,
+      order: index,
+    }));
+
+    try {
+      const res = await fetch("/api/exercises", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ exercises: reorderedPayload }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to save exercise order");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const sensors = useSensors(
@@ -122,6 +161,7 @@ export const ExerciseList = ({
           <div className="flex w-100 flex-col justify-center">
             {exercises.map((exercise) => (
               <Exercise
+                key={exercise.id}
                 id={exercise.id}
                 name={exercise.name}
                 kg={exercise.kg}
@@ -134,7 +174,6 @@ export const ExerciseList = ({
                 setEditingExercise={setEditingExercise}
                 editedExercise={editedExercise}
                 setEditedExercise={setEditedExercise}
-                key={exercise.id}
               />
             ))}
             <AddExercise exercises={exercises} setExercises={setExercises} />
@@ -216,17 +255,30 @@ export const EditExercise = ({
 }: EditExerciseProps) => {
   const { register, handleSubmit } = useForm<ExerciseType>();
 
-  const onSubmit: SubmitHandler<ExerciseType> = (data: ExerciseType) => {
+  const onSubmit: SubmitHandler<ExerciseType> = async (data: ExerciseType) => {
     if (!editedExercise) return;
 
-    setExercises(
-      exercises.map((exercise) =>
-        exercise.id === editedExercise.id
-          ? { ...editedExercise, ...data }
-          : exercise,
-      ),
-    );
-    setEditingExercise(false);
+    const { id, ...rest } = data;
+    const body = { id: editedExercise.id, ...rest };
+
+    const res = await fetch("/api/exercises", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (res.ok) {
+      const updatedExercise = await res.json();
+
+      setExercises(
+        exercises.map((exercise) =>
+          exercise.id === updatedExercise.id ? updatedExercise : exercise,
+        ),
+      );
+      setEditingExercise(false);
+    } else {
+      console.error("Failed to update exercise");
+    }
   };
 
   return (
@@ -312,18 +364,23 @@ export const EditExercise = ({
 };
 
 const AddExercise = ({ setExercises }: ExercisesType) => {
-  const addExercise = () => {
-    setExercises((prev) => [
-      ...prev,
-      {
-        id: prev.length,
-        name: "New Exercise",
-        kg: 0,
-        reps: 0,
-        sets: 0,
-        misc: "",
-      },
-    ]);
+  const addExercise = async () => {
+    const newExercise = {
+      name: "New Exercise",
+      kg: 0,
+      reps: 0,
+      sets: 0,
+      misc: "",
+    };
+
+    const res = await fetch("/api/exercises", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newExercise),
+    });
+
+    const savedExercise = await res.json();
+    setExercises((prev) => [...prev, savedExercise]);
   };
 
   return (

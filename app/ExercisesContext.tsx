@@ -8,56 +8,7 @@ import { ExercisesType } from "./types/WorkoutTracker";
 const ExercisesContext = createContext<ExercisesType | undefined>(undefined);
 
 export const ExercisesProvider = ({ children }: { children: ReactNode }) => {
-  const [exercises, setExercises] = useState<ExerciseType[]>([
-    {
-      id: 0,
-      name: "Dumbbell Press",
-      kg: 56,
-      sets: 2,
-      reps: 6,
-      misc: "Bench incline: 30°",
-    },
-    {
-      id: 1,
-      name: "Barbell Press",
-      kg: 86,
-      sets: 2,
-      reps: 6,
-      misc: "",
-    },
-    {
-      id: 2,
-      name: "Dumbbell Lateral Raise",
-      kg: 16,
-      sets: 2,
-      reps: 6,
-      misc: "",
-    },
-    {
-      id: 3,
-      name: "Dumbbell Lateral Raise",
-      kg: 16,
-      sets: 2,
-      reps: 6,
-      misc: "",
-    },
-    {
-      id: 4,
-      name: "Dumbbell Lateral Raise",
-      kg: 16,
-      sets: 2,
-      reps: 6,
-      misc: "",
-    },
-    {
-      id: 5,
-      name: "Dumbbell Lateral Raise",
-      kg: 16,
-      sets: 2,
-      reps: 6,
-      misc: "",
-    },
-  ]);
+  const [exercises, setExercises] = useState<ExerciseType[]>([]);
 
   return (
     <ExercisesContext.Provider value={{ exercises, setExercises }}>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, Key } from "react";
 
 export type ExerciseType = {
   id: number;
