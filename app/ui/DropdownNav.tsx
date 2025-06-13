@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { useDropdown } from "../DropdownContext";
 
-export const DropdownNav = () => {
-  const { showDropdown, setShowDropdown } = useDropdown();
+type DropdownNavProps = {
+  showDropdown: boolean;
+  closeDropdown: () => void;
+}
+
+export const DropdownNav = ({ showDropdown, closeDropdown }: DropdownNavProps) => {
 
   return (
     <>
@@ -11,7 +14,7 @@ export const DropdownNav = () => {
           <div>
             <button
               className="mb-4 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
-              onClick={() => setShowDropdown(false)}
+              onClick={() => closeDropdown}
             >
               <Link href="/weight-tracker">Weight Tracker</Link>
             </button>
@@ -19,7 +22,7 @@ export const DropdownNav = () => {
           <div>
             <button
               className="mb-4 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
-              onClick={() => setShowDropdown(false)}
+              onClick={() => closeDropdown}
             >
               <Link href="/workout-tracker">Workout Tracker</Link>
             </button>
@@ -27,7 +30,7 @@ export const DropdownNav = () => {
           <div>
             <button
               className="cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
-              onClick={() => setShowDropdown(false)}
+              onClick={() => closeDropdown}
             >
               <Link href="https://github.com/luhvi/Workout-Tracker">
                 GitHub
