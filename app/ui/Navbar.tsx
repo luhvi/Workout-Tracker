@@ -5,16 +5,17 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 
-import { useDropdown } from "../DropdownContext";
+type NavbarProps = {
+  showDropdown: boolean;
+  setDropdown: (arg: boolean) => void;
+}
 
-export const Navbar = () => {
-  const { showDropdown, setShowDropdown } = useDropdown();
+export const Navbar = ({ setDropdown, showDropdown }: NavbarProps) => {
 
   return (
     <div className="bg-[rgb(10,10,10,0.7) fixed top-0 z-50 flex h-21.5 w-full flex-row items-center border-b-2 border-neutral-800 backdrop-blur-md">
       <div className="hidden items-center md:flex">
         <button
-          onClick={() => setShowDropdown(false)}
           className="mr-6 ml-6 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
         >
           <Link href="/">
@@ -39,8 +40,8 @@ export const Navbar = () => {
         </button>
         <button
           className="absolute right-0 mr-8 ml-8 flex w-[21px] cursor-pointer items-center justify-center"
-          type="button"
-          onClick={() => setShowDropdown((prev) => !prev)}
+          type="reset"
+          onClick={() => setDropdown(!showDropdown)}
         >
           {!showDropdown ? (
             <FontAwesomeIcon
