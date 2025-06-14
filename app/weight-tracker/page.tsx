@@ -1,13 +1,11 @@
 "use client";
 
-import { Navbar } from "../ui/Navbar";
-import { DropdownNav } from "../ui/DropdownNav";
+import { ResponsiveNavigation } from "../ui/ResponsiveNavigation";
 
 const WeightTracker = () => {
   return (
     <div>
-      <Navbar />
-      <DropdownNav />
+      <ResponsiveNavigation />
     </div>
   );
 };

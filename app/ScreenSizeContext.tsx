@@ -13,25 +13,21 @@ type ScreenSizeContextType = {
 };
 
 const ScreenSizeContext = createContext<ScreenSizeContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export const ScreenSizeProvider = ({ children }: { children: ReactNode }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    // Function to check if screen is small (typically under 425px for mobile)
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 425);
     };
 
-    // Set the initial value
     checkScreenSize();
 
-    // Add event listener for window resize
     window.addEventListener("resize", checkScreenSize);
 
-    // Clean up event listener on component unmount
     return () => {
       window.removeEventListener("resize", checkScreenSize);
     };
