@@ -275,8 +275,8 @@ export const EditExercise = ({
   const onSubmit: SubmitHandler<ExerciseType> = async (data: ExerciseType) => {
     if (!editedExercise) return;
 
-    const { id, ...rest } = data;
-    const body = { id: editedExercise.id, ...rest };
+    const { name, kg, reps, sets, misc } = data;
+    const body = { id: editedExercise.id, name, kg, sets, reps, misc };
 
     const res = await fetch("/api/exercises", {
       method: "PUT",
