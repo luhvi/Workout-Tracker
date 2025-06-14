@@ -3,14 +3,16 @@ import Link from "next/link";
 type DropdownNavProps = {
   showDropdown: boolean;
   closeDropdown: () => void;
-}
+};
 
-export const DropdownNav = ({ showDropdown, closeDropdown }: DropdownNavProps) => {
-
+export const DropdownNav = ({
+  showDropdown,
+  closeDropdown,
+}: DropdownNavProps) => {
   return (
     <>
       {showDropdown ? (
-        <div className="fixed top-21.5 flex h-[100vh] w-[100vw] flex-col gap-2 bg-[#0a0a0a] pt-6 pl-6 md:hidden">
+        <div className="fixed top-21.5 z-50 flex h-screen w-screen flex-col gap-2 bg-[#0a0a0a] pt-6 pl-6 md:hidden">
           <div>
             <button
               className="mb-4 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"

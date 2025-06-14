@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ScreenSizeProvider } from "./ScreenSizeContext";
 import { ResponsiveNavigation } from "./ui/ResponsiveNavigation";
 import { ExercisesProvider } from "./ExercisesContext";
 import { EditingProvider } from "./EditingContext";
@@ -32,16 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ScreenSizeProvider>
-          <ExercisesProvider>
-            <EditingProvider>
-              <EditedProvider>
-                <ResponsiveNavigation />
-                {children}
-              </EditedProvider>
-            </EditingProvider>
-          </ExercisesProvider>
-        </ScreenSizeProvider>
+        <ExercisesProvider>
+          <EditingProvider>
+            <EditedProvider>
+              <ResponsiveNavigation />
+              {children}
+            </EditedProvider>
+          </EditingProvider>
+        </ExercisesProvider>
       </body>
     </html>
   );
