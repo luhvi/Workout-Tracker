@@ -22,7 +22,6 @@ import type {
   ExercisesType,
   EditingType,
   EditedType,
-  WorkoutTrackerPropsType,
 } from "../types/WorkoutTracker";
 
 import { useExercises } from "../ExercisesContext";
