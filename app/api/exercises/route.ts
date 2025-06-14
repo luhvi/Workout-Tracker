@@ -1,6 +1,6 @@
 import supabase from "@/app/lib/supabase";
 
-async function GET() {
+export async function GET() {
   const { data, error } = await supabase.from("exercises").select("*");
 
   if (error) {
@@ -100,5 +100,34 @@ export async function PATCH(request: Request) {
   return new Response(
     JSON.stringify({ message: "Order updated successfully" }),
     { status: 200, headers: { "Content-Type": "application/json" } },
+  );
+}
+
+export async function DELETE(request: Request) {
+  const body = await request.json();
+  const { id } = body;
+
+  if (!id) {
+    return new Response(JSON.stringify({ error: "ID is required" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  const { error } = await supabase.from("exercises").delete().eq("id", id);
+
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  return new Response(
+    JSON.stringify({ message: "Exercise deleted successfully" }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    },
   );
 }

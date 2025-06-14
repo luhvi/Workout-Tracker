@@ -3,10 +3,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ScreenSizeProvider } from "./ScreenSizeContext";
 import { ResponsiveNavigation } from "./ui/ResponsiveNavigation";
+import { ExercisesProvider } from "./ExercisesContext";
+import { EditingProvider } from "./EditingContext";
+import { EditedProvider } from "./EditedContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin"]
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
@@ -30,8 +33,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ScreenSizeProvider>
-          <ResponsiveNavigation />
-          {children}
+          <ExercisesProvider>
+            <EditingProvider>
+              <EditedProvider>
+                <ResponsiveNavigation />
+                {children}
+              </EditedProvider>
+            </EditingProvider>
+          </ExercisesProvider>
         </ScreenSizeProvider>
       </body>
     </html>

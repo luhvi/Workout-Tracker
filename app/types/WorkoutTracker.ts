@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, Key } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export type ExerciseType = {
   id: number;
@@ -22,4 +22,8 @@ export type EditingType = {
 export type EditedType = {
   editedExercise: ExerciseType | undefined;
   setEditedExercise: Dispatch<SetStateAction<ExerciseType | undefined>>;
+};
+
+export type WorkoutTrackerPropsType = {
+  data: ExerciseType[];
 };

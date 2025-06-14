@@ -22,12 +22,12 @@ import type {
   ExercisesType,
   EditingType,
   EditedType,
+  WorkoutTrackerPropsType,
 } from "../types/WorkoutTracker";
 
 import { useExercises } from "../ExercisesContext";
 import { useEditing } from "../EditingContext";
 import { useEdited } from "../EditedContext";
-import { useDropdown } from "../DropdownContext";
 
 import { CSS } from "@dnd-kit/utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,33 +44,28 @@ const WorkoutTracker = () => {
   const { exercises, setExercises } = useExercises();
   const { editingExercise, setEditingExercise } = useEditing();
   const { editedExercise, setEditedExercise } = useEdited();
-  const { showDropdown } = useDropdown();
 
   useEffect(() => {
     const fetchExercises = async () => {
       const res = await fetch("/api/exercises");
       const data = await res.json();
 
-      if (Array.isArray(data)) {
-        setExercises(data);
-      }
+      setExercises(data);
     };
 
     fetchExercises();
-  }, []);
+  }, [setExercises]);
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center">
-      {!showDropdown ? (
-        <ExerciseList
-          exercises={exercises}
-          setExercises={setExercises}
-          editingExercise={editingExercise}
-          setEditingExercise={setEditingExercise}
-          editedExercise={editedExercise}
-          setEditedExercise={setEditedExercise}
-        />
-      ) : null}
+      <ExerciseList
+        exercises={exercises}
+        setExercises={setExercises}
+        editingExercise={editingExercise}
+        setEditingExercise={setEditingExercise}
+        editedExercise={editedExercise}
+        setEditedExercise={setEditedExercise}
+      />
 
       {editingExercise ? (
         <div className="bg-[rgb(10,10,10,0.7) fixed top-0 left-0 flex h-full w-full items-center justify-center backdrop-blur-sm">
@@ -87,6 +82,7 @@ const WorkoutTracker = () => {
     </div>
   );
 };
+
 export default WorkoutTracker;
 
 export const ExerciseList = ({
@@ -193,6 +189,7 @@ const Exercise = ({
   reps,
   sets,
   exercises,
+  setExercises,
   setEditingExercise,
   setEditedExercise,
 }: ExerciseProps) => {
@@ -213,6 +210,20 @@ const Exercise = ({
     }
   };
 
+  const deleteExercise = async () => {
+    const res = await fetch("/api/exercises", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+
+    if (res.ok) {
+      setExercises((prev) => prev.filter((exercise) => exercise.id !== id));
+    } else {
+      console.error("Failed to delete exercise");
+    }
+  };
+
   return (
     <div
       className="relative mb-2 flex h-10 cursor-pointer touch-none items-center rounded-sm border-2 border-neutral-800 bg-neutral-900 py-10 font-[family-name:var(--font-geist-mono)]"
@@ -222,7 +233,14 @@ const Exercise = ({
       style={style}
     >
       <button
-        className="absolute top-0 right-1 cursor-pointer text-sm text-neutral-600 transition-colors duration-300 hover:text-white"
+        className="absolute top-0 right-1.5 cursor-pointer text-sm text-neutral-600 transition-colors duration-300 hover:text-white"
+        onPointerDown={(event) => event.stopPropagation()}
+        onClick={deleteExercise}
+      >
+        <FontAwesomeIcon icon={faXmark} />
+      </button>
+      <button
+        className="absolute right-0.5 bottom-0 cursor-pointer text-sm text-neutral-600 transition-colors duration-300 hover:text-white"
         onPointerDown={(event) => event.stopPropagation()}
         onClick={editExercise}
       >
@@ -380,6 +398,13 @@ const AddExercise = ({ setExercises }: ExercisesType) => {
     });
 
     const savedExercise = await res.json();
+    console.log("API response:", savedExercise);
+
+    if (!res.ok) {
+      console.error("Failed to add new exercise");
+      return;
+    }
+
     setExercises((prev) => [...prev, savedExercise]);
   };
 

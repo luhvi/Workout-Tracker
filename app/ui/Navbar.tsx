@@ -8,16 +8,13 @@ import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 type NavbarProps = {
   showDropdown: boolean;
   setDropdown: (arg: boolean) => void;
-}
+};
 
 export const Navbar = ({ setDropdown, showDropdown }: NavbarProps) => {
-
   return (
     <div className="bg-[rgb(10,10,10,0.7) fixed top-0 z-50 flex h-21.5 w-full flex-row items-center border-b-2 border-neutral-800 backdrop-blur-md">
       <div className="hidden items-center md:flex">
-        <button
-          className="mr-6 ml-6 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
-        >
+        <button className="mr-6 ml-6 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white">
           <Link href="/">
             <FontAwesomeIcon icon={faDumbbell} />
           </Link>
