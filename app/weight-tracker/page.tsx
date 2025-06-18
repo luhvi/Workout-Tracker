@@ -1,13 +1,9 @@
 "use client";
 
-import { ResponsiveNavigation } from "../ui/ResponsiveNavigation";
+import WeightTracker from "../components/WeightTracker";
 
-const WeightTracker = () => {
-  return (
-    <div>
-      <ResponsiveNavigation />
-    </div>
-  );
+const WeightTrackerPage = () => {
+  return <WeightTracker />;
 };
 
-export default WeightTracker;
+export default WeightTrackerPage;
