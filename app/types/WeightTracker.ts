@@ -1,7 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
 
-export type KgType = {
-  kg: number;
+export type WeightType = {
+  weight: number;
+  date: string;
+};
+
+export type WeightsType = {
+  weights: WeightType[];
+  setWeights: Dispatch<SetStateAction<WeightType[]>>;
 };
 
 export type ShownWeekStartType = {

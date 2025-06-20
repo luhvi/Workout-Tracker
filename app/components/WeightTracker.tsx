@@ -1,10 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useState } from "react";
 
 import {
+  WeightType,
+  WeightsType,
   ShownWeekStartType,
   ShownWeekType,
   ShownMonthType,
@@ -13,6 +16,7 @@ import {
   ShownAllType,
   SelectedInfoType,
 } from "../types/WeightTracker";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const getWeekRangeString = (date: Date): string => {
   const day = date.getDay();
@@ -53,6 +57,8 @@ const quarters = [
 ] as const;
 
 const WeightTracker = () => {
+  const [weights, setWeights] = useState<WeightType[]>([]);
+
   const [selectedInfo, setSelectedInfo] = useState<
     "Week" | "Month" | "Quarter" | "Year" | "All"
   >("Month");
@@ -110,6 +116,7 @@ const WeightTracker = () => {
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center">
+      <WeightForm weights={weights} setWeights={setWeights} />
       <InfoSelection
         selectedInfo={selectedInfo}
         setSelectedInfo={setSelectedInfo}
@@ -133,6 +140,8 @@ const WeightTracker = () => {
     </div>
   );
 };
+
+export default WeightTracker;
 
 const InfoSelection = ({ selectedInfo, setSelectedInfo }: SelectedInfoType) => {
   return (
@@ -370,6 +379,62 @@ const WeightDiagram = ({
           </button>
         ) : null}
       </div>
+      <div className="absolute bottom-[29.19px] left-[42.41px] h-[262px] w-[354px]">
+        <div className="flex h-[43.666px] w-full flex-row justify-between border-b-2 border-neutral-800">
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              className="h-[43.666px] w-14.75 border-r-2 border-neutral-800"
+            ></div>
+          ))}
+          <div className="h-[43.666px] w-14.75"></div>
+        </div>
+        <div className="flex h-[43.666px] w-full flex-row justify-between border-b-2 border-neutral-800">
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              className="h-[43.666px] w-14.75 border-r-2 border-neutral-800"
+            ></div>
+          ))}
+          <div className="h-[43.666px] w-14.75"></div>
+        </div>
+        <div className="flex h-[43.666px] w-full flex-row justify-between border-b-2 border-neutral-800">
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              className="h-[43.666px] w-14.75 border-r-2 border-neutral-800"
+            ></div>
+          ))}
+          <div className="h-[43.666px] w-14.75"></div>
+        </div>
+        <div className="flex h-[43.666px] w-full flex-row justify-between border-b-2 border-neutral-800">
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              className="h-[43.666px] w-14.75 border-r-2 border-neutral-800"
+            ></div>
+          ))}
+          <div className="h-[43.666px] w-14.75"></div>
+        </div>
+        <div className="flex h-[43.666px] w-full flex-row justify-between border-b-2 border-neutral-800">
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              className="h-[43.666px] w-14.75 border-r-2 border-neutral-800"
+            ></div>
+          ))}
+          <div className="h-[43.666px] w-14.75"></div>
+        </div>
+        <div className="flex h-[43.666px] w-full flex-row justify-between">
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              className="h-[43.666px] w-14.75 border-r-2 border-neutral-800"
+            ></div>
+          ))}
+          <div className="h-[43.666px] w-14.75"></div>
+        </div>
+      </div>
       <div className="absolute flex h-[267px] flex-col items-center justify-between px-2 py-4 text-[0.55rem]">
         <span>100kg</span>
         <span>95kg</span>
@@ -422,4 +487,39 @@ const WeightDiagram = ({
   );
 };
 
-export default WeightTracker;
+const WeightForm = ({ weights, setWeights }: WeightsType) => {
+  const { register, handleSubmit, reset } = useForm<WeightType>();
+
+  const onSubmit: SubmitHandler<WeightType> = (data) => {
+    const date = new Date();
+    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+    const newEntry: WeightType = {
+      ...data,
+      date: formattedDate,
+    };
+
+    setWeights((prev) => [...prev, newEntry]);
+
+    console.log(weights);
+    reset();
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mb-2 flex items-center justify-center rounded-md border-2 border-neutral-800 bg-neutral-900 py-1 text-center font-[family-name:var(--font-geist-sans)]"
+    >
+      <input
+        type="number"
+        placeholder="Kg"
+        className="w-11 pl-2 text-xs outline-none"
+        max={120}
+        {...register("weight", { required: true })}
+      />
+      <button className="cursor-pointer pr-2 text-xs transition-colors duration-150 hover:text-neutral-600">
+        <FontAwesomeIcon icon={faMagnifyingGlass} />
+      </button>
+    </form>
+  );
+};
