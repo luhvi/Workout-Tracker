@@ -16,23 +16,31 @@ export const DropdownNav = ({
           <div>
             <button
               className="mb-4 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
-              onClick={() => closeDropdown}
-            >
-              <Link href="/weight-tracker">Weight Tracker</Link>
-            </button>
-          </div>
-          <div>
-            <button
-              className="mb-4 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
-              onClick={() => closeDropdown}
+              onClick={closeDropdown}
             >
               <Link href="/workout-tracker">Workout Tracker</Link>
             </button>
           </div>
           <div>
             <button
+              className="mb-4 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
+              onClick={closeDropdown}
+            >
+              <Link href="/calorie-tracker">Calorie Tracker</Link>
+            </button>
+          </div>
+          <div>
+            <button
+              className="mb-4 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
+              onClick={closeDropdown}
+            >
+              <Link href="/weight-tracker">Weight Tracker</Link>
+            </button>
+          </div>
+          <div>
+            <button
               className="cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white"
-              onClick={() => closeDropdown}
+              onClick={closeDropdown}
             >
               <Link href="https://github.com/luhvi/Workout-Tracker">
                 GitHub

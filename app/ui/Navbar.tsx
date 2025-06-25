@@ -20,10 +20,13 @@ export const Navbar = ({ setDropdown, showDropdown }: NavbarProps) => {
           </Link>
         </button>
         <button className="mr-6 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white">
-          <Link href="/weight-tracker">Weight Tracker</Link>
+          <Link href="/workout-tracker">Workout Tracker</Link>
         </button>
         <button className="mr-6 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white">
-          <Link href="/workout-tracker">Workout Tracker</Link>
+          <Link href="/calorie-tracker">Calorie Tracker</Link>
+        </button>
+        <button className="mr-6 cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white">
+          <Link href="/weight-tracker">Weight Tracker</Link>
         </button>
         <button className="cursor-pointer font-[family-name:var(--font-geist-mono)] text-lg text-neutral-600 transition-colors duration-300 hover:text-white">
           <Link href="https://github.com/luhvi/Workout-Tracker">GitHub</Link>

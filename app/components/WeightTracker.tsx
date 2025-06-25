@@ -136,6 +136,8 @@ const WeightTracker = () => {
         setShownYear={setShownYear}
         shownAll={shownAll}
         setShownAll={setShownAll}
+        weights={weights}
+        setWeights={setWeights}
       />
     </div>
   );
@@ -186,7 +188,8 @@ type WeightDiagramProps = SelectedInfoType &
   ShownMonthType &
   ShownQuarterType &
   ShownYearType &
-  ShownAllType;
+  ShownAllType &
+  WeightsType;
 
 const WeightDiagram = ({
   selectedInfo,
@@ -201,6 +204,8 @@ const WeightDiagram = ({
   shownYear,
   setShownYear,
   shownAll,
+  weights,
+  setWeights,
 }: WeightDiagramProps) => {
   const updateWeek = (next: boolean) => {
     const date = new Date(shownWeekStart);
@@ -434,6 +439,25 @@ const WeightDiagram = ({
           ))}
           <div className="h-[43.666px] w-14.75"></div>
         </div>
+        <div className="absolute bottom-[0px] left-[0px] z-50 flex h-[262px] w-[354px] flex-col">
+          {weights.map((weight, index) => {
+            const style =
+              selectedInfo === "Month"
+                ? {
+                    left: `${selectedInfo === "Month" ? weight.day : null}px`,
+                    bottom: `${selectedInfo === "Month" ? weight.weight : null}px`,
+                  }
+                : {};
+
+            return (
+              <button
+                key={index}
+                style={style}
+                className={`absolute h-2 w-2 rounded-full bg-neutral-600`}
+              ></button>
+            );
+          })}
+        </div>
       </div>
       <div className="absolute flex h-[267px] flex-col items-center justify-between px-2 py-4 text-[0.55rem]">
         <span>100kg</span>
@@ -492,11 +516,15 @@ const WeightForm = ({ weights, setWeights }: WeightsType) => {
 
   const onSubmit: SubmitHandler<WeightType> = (data) => {
     const date = new Date();
-    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getMonth();
 
     const newEntry: WeightType = {
       ...data,
-      date: formattedDate,
+      day: day,
+      month: month,
+      year: year,
     };
 
     setWeights((prev) => [...prev, newEntry]);

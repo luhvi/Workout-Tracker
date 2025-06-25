@@ -2,7 +2,9 @@ import { Dispatch, SetStateAction } from "react";
 
 export type WeightType = {
   weight: number;
-  date: string;
+  day: number;
+  month: number;
+  year: number;
 };
 
 export type WeightsType = {

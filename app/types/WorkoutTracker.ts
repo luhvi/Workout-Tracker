@@ -23,7 +23,3 @@ export type EditedType = {
   editedExercise: ExerciseType | undefined;
   setEditedExercise: Dispatch<SetStateAction<ExerciseType | undefined>>;
 };
-
-export type WorkoutTrackerPropsType = {
-  data: ExerciseType[];
-};
