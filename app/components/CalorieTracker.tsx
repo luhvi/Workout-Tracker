@@ -146,6 +146,7 @@ const Meal = ({ meal, setMeals, setEditingMeal, setEditedMeal }: MealProps) => {
   const style = transform
     ? {
         transform: `translate(${transform.x}px, ${transform.y}px)`,
+        zIndex: 50,
       }
     : undefined;
 
